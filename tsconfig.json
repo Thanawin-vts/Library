@@ -6,6 +6,9 @@
     "paths": {
       "dateFormatter": [
         "dist/date-formatter"
+      ],
+      "thaiVowel": [
+        "dist/thai-vowel"
       ]
     },
     "outDir": "./dist/out-tsc",
