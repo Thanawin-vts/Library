@@ -1,27 +1,89 @@
-# WnFormatter
+# **WnFormatter TS**
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+Simple way to format your date with Pipe.
 
-## Development server
+#### **Installation**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+  npm i date-formatter-ts
+```
 
-## Code scaffolding
+#### **Sample Usage**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```javascript
+// getFormattedDate(date: Date, format: string): string
+transform(dateValue: any, country: string, format: string): unknown {
+    let plusYear = 0;
+    if (country === 'TH') {
+      plusYear = 543;
+    } else {
+      plusYear = 0;
+    }
+    if (this.dateFormat.includes(format)) {
+      var currentDate = new Date(dateValue);
+      const datePipe = new DatePipe('en-US');
+      const day = currentDate.getDate();
+      const month = currentDate.getMonth();
+      const year = currentDate.getFullYear() + plusYear;
+      currentDate.setFullYear(year, month, day);
+      const date = datePipe.transform(currentDate, format);
+      return date;
+    } else {
+      return 'InvalidDateFormat';
+    }
+  }
+```
 
-## Build
+#### **Sample Usage**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1) Register the `DateFormatterModule` in your app module.
+> `import { DateFormatterModule } from 'wn-formatter/dist/date-formatter'`
 
-## Running unit tests
+```javascript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { DateFormatterModule } from 'wn-formatter/dist/date-formatter'
 
-## Running end-to-end tests
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    DateFormatterModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+2) Register the Pipe`dateformat` in your app module.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```html
+// In html file
+// @Pipe({ name: 'dateformat' })
+// transform(dateValue: any, country: string, format: string)
+// dateValue = date
+// country = "TH"
+// format = "dd-MM-yyyyy"
 
-## Further help
+<p>{{ date | dateformat : "TH" : "dd-MM-yyyyy" }}</p>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+// output: 17-10-2566
+```
+
+**Accepted Date formats**
+
+- Weekday: **WWW** (Ex: Sun,...,Sat), **WWWW** (Ex: Sunday,...,Monday)
+
+- Day: **D** (Ex: 1,2,..,11,12), **DD** (Ex: 01,02,...,11,12)
+
+- Month: **M** (Ex: 1,2,..,11,12), **MM** (Ex: 01,02,...,11,12), **MMM** (Ex: Jan,..,Dec), **MMMM** (Ex: January,..,December)
+
+- Year: **YY** (Ex: 90,...,22), **YYYY** (Ex: 1990,..,2022)
