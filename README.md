@@ -65,7 +65,7 @@ export class AppModule { }
 ```
 2) Register the Pipe`dateformat` in your app module.
 
-```html
+```javascript
 // In html file
 // @Pipe({ name: 'dateformat' })
 // transform(dateValue: any, country: string, format: string)
