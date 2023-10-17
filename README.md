@@ -65,7 +65,7 @@ export class AppModule { }
 ```
 2) Register the Pipe`dateformat` in your app module.
 
-```javascript
+<pre>
 // In html file
 // @Pipe({ name: 'dateformat' })
 // transform(dateValue: any, country: string, format: string)
@@ -76,7 +76,7 @@ export class AppModule { }
 <p>{{ date | dateformat : "TH" : "dd-MM-yyyyy" }}</p>
 
 // output: 17-10-2566
-```
+</pre>
 
 **Accepted Date formats**
 
